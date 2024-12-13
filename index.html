@@ -7,37 +7,35 @@
     <title>Wedding Invitation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Fungsi untuk countdown timer
         function startCountdown() {
-            // Tentukan waktu target (contoh: 1 hari dari sekarang)
-            let targetTime = new Date().getTime() + 720 * 60 * 60 * 1000; // 24 jam
+            // Waktu target: 9 Januari 2025, pukul 00:00 UTC
+            const targetDate = new Date(Date.UTC(2025, 0, 9, 15, 0, 0)); // Bulan ke-0 untuk Januari
 
-            // Update timer setiap detik
-            let interval = setInterval(function() {
-                let now = new Date().getTime();
-                let remainingTime = targetTime - now;
+            const interval = setInterval(() => {
+                const now = new Date(); // Waktu sekarang
+                const timeDifference = targetDate - now; // Selisih waktu dalam milidetik
 
-                if (remainingTime <= 0) {
-                    clearInterval(interval);
-                    document.getElementById("timer").innerHTML = "Waktu Habis!";
+                if (timeDifference <= 0) {
+                    clearInterval(interval); // Hentikan timer saat waktu habis
+                    document.getElementById("days").textContent = "00";
+                    document.getElementById("hours").textContent = "00";
+                    document.getElementById("minutes").textContent = "00";
+                    document.getElementById("seconds").textContent = "00";
                 } else {
-                    let days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-                    let hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    let minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                    let seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+                    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-                    document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
-                    document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
-                    document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
-                    document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+                    // Update elemen UI
+                    document.getElementById("days").textContent = days.toString().padStart(2, "0");
+                    document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
+                    document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
+                    document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
                 }
-            }, 1000);
+            }, 1000); // Perbarui setiap detik
         }
-
-        // Memulai countdown saat halaman dimuat
-        window.onload = function() {
-            startCountdown();
-        };
+        window.onload = startCountdown;
     </script>
     <script>
         // Fungsi untuk membaca parameter "name" di URL
